@@ -18,7 +18,15 @@ class CardsController < ApplicationController
 
     def create 
         card = @user.cards.create(cards_params)
-        render json: card
+        if card.valid?
+            card.save
+            render json: card
+        else
+            render json: {
+                message: card.errors
+            }
+        end
+
     end
 
 
