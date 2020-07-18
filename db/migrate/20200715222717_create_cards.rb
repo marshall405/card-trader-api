@@ -9,6 +9,7 @@ class CreateCards < ActiveRecord::Migration[6.0]
       t.string :condition
       t.integer :year
       t.integer :user_id
+      t.integer :trade_id
       t.timestamps
     end
   end
