@@ -1,12 +1,13 @@
 class AuthController < ApplicationController
+    wrap_parameters :user, include:[:username, :password]
     skip_before_action :authorized, only: [:create]
     # ^ We are not requiring the Authorization header for the create method so a user can
     # create an account without being logged in.
  
   def create
-    pp params
     @user = User.find_by(username: user_login_params[:username])
    
+    pp user_login_params
     # User authenticate method comes from BCrypt.
     if @user && @user.authenticate(user_login_params[:password])
       # encode_token method comes from ApplicationController.

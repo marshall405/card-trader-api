@@ -6,14 +6,14 @@ class CardsController < ApplicationController
     def index 
         cards = Card.all.map do |card|
             {
-                card:CardSerializer.new(card),
+                info:CardSerializer.new(card),
                 user:{
                     user_id: card.user.id,
                     username: card.user.username
                 }                
         }
         end
-        render json: {cards: cards}
+        render json: cards
     end
 
     def create 
