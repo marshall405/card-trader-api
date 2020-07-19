@@ -54,6 +54,7 @@ class CardsController < ApplicationController
         cards = @user.cards
         render json: cards
     end
+   
 
 
     private

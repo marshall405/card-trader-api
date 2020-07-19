@@ -1,15 +1,20 @@
 class TradesController < ApplicationController
+    
 
 
     def create
+        pp params
         requested_card = Card.find(trade_params[:card_id])
         trade = @user.traders.create(tradee_id: requested_card.user.id, requested_card_id: requested_card.id) 
         params[:cards].each do |c|
-            card = Card.find(c["card_id"])
+            card = Card.find(c)
             if !card.trade_id
-                card.update(trade_id: trade.id)
-            else
-                raise 'Card being offered in trade is already being used in another trade'
+                if !card.update(trade_id: trade.id)
+                    render json: {
+                        message: card.errors
+                    }
+                    return
+                end
             end
         end
         render json: {
