@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   
-  resources :cards
+  resources :cards, only: [:index, :create, :update, :show]
   resources :users, only: [:create, :index]
+
+  get 'cards/user/:user_id', to: 'cards#user_cards'
   post '/login', to: 'auth#create'
 
   post '/trades', to: 'trades#create'
