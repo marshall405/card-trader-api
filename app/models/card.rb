@@ -1,4 +1,5 @@
 class Card < ApplicationRecord
+    validates :first_name, :last_name, :team, :year, :category, :condition, presence: true    
     belongs_to :user
 
     # Can only be offered in one trade at a time

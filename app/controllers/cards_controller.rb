@@ -16,6 +16,16 @@ class CardsController < ApplicationController
         render json: cards
     end
 
+    def show
+        card = Card.find(params[:id])
+        render json: {
+            card: card,
+            user: {
+                user_id: card.user.id,
+                username: card.user.username
+            }
+        }   
+    end
     def create 
         card = @user.cards.create(cards_params)
         if card.valid?
@@ -28,6 +38,23 @@ class CardsController < ApplicationController
         end
 
     end
+
+    def update
+        card = Card.find(params[:id])
+        if card 
+            card.update(cards_params)
+            render json: card
+        else
+            render json: {message: "Could not update card"}
+        end
+        
+    end
+
+    def user_cards
+        cards = @user.cards
+        render json: cards
+    end
+   
 
 
     private
