@@ -1,6 +1,33 @@
 class TradesController < ApplicationController
     
 
+    def index
+        traders = @user.traders.map do |trade|
+            TradeSerializer.new(trade)
+        end
+
+        tradees = @user.tradees.map do |trade|
+            TradeSerializer.new(trade)
+        end
+
+        render json: {
+            traders: traders
+        }
+    end
+
+    def offers 
+        tradees = @user.tradees.map do |trade|
+            TradeSerializer.new(trade)
+        end
+        render json: {
+            tradees: tradees
+        }
+    end
+
+    def show 
+        trade = Trade.find(params[:id])
+        render json: trade
+    end
 
     def create
         pp params
@@ -22,6 +49,20 @@ class TradesController < ApplicationController
             cards: trade.cards,
             message: 'created new trade'
         }
+    end
+
+    def update_offer
+        trade = Trade.find(params[:id])
+
+        # confirm that the tradee is the user sending their status
+        if @user.id == trade.tradee.id
+            trade.update(status: params[:status])
+            trade.clear 
+            render json: trade, status: :accepted
+        else
+            render json: trade, status: :unauthorized
+        end
+        
     end
 
 

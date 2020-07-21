@@ -22,7 +22,12 @@
 
 
 
-User.create(email: 'marshall.slemp@gmail.com', username: 'marshall405', first_name: 'Marshall', last_name: 'Slemp', password: '123', password_confirmation:'123')
+me = User.create(email: 'marshall.slemp@gmail.com', username: 'marshall405', first_name: 'Marshall', last_name: 'Slemp', password: '123', password_confirmation:'123')
+me.cards.create({ category: "Football", first_name: "Emmit", last_name: "Smith", team: "Dallas Cowboys", condition: "Excellent", year: 1995 })
+me.cards.create({ category: "Baseball", first_name: "Derek", last_name: "Jeter", team: "New York Yankees", condition: "Fair", year: 2006 })
+me.cards.create({ category: "Basketball", first_name: "Kobe", last_name: "Bryant", team: "Los Angeles Lakers", condition: "Fair", year: 1999 })
+me.cards.create({ category: "Basketball", first_name: "Allen", last_name: "Iverson", team: "Philidelphia 76'rs", condition: "Fair", year: 2000 })
+me.cards.create({ category: "Football", first_name: "Peyton", last_name: "Manning", team: "Indianapolis Colts", condition: "Good", year: 2010 })
 
 def create_users
     count = 10
