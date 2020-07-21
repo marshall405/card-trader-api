@@ -2,6 +2,8 @@ class CardsController < ApplicationController
     skip_before_action :authorized, only: [:index]
     # ^ Do not require login for index because we want to display all cards on homepage
 
+    wrap_parameters :card, include:[:category, :first_name, :last_name, :team, :condition, :year, :image]
+
 
     def index 
         cards = Card.all.map do |card|
@@ -27,7 +29,12 @@ class CardsController < ApplicationController
         }   
     end
     def create 
-        card = @user.cards.create(cards_params)
+        
+        pp params
+        card = @user.cards.create(first_name: params[:first_name], last_name: params[:last_name], team: params[:team], condition: params[:condition], year: params[:year], category: params[:category])
+        card.card_image.attach(params[:image])
+        card.img_url = polymorphic_url(card.card_image)
+
         if card.valid?
             card.save
             render json: card
@@ -60,7 +67,7 @@ class CardsController < ApplicationController
     private
 
     def cards_params
-        params.require(:card).permit(:category, :first_name, :last_name, :team, :condition, :year)
+        params.require(:card).permit(:category, :first_name, :last_name, :team, :condition, :year, :image)
     end
 
 end

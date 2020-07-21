@@ -8,3 +8,7 @@ production:
   adapter: redis
   url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
   channel_prefix: card_trader_api_production
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
