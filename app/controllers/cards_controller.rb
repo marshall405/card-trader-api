@@ -33,7 +33,8 @@ class CardsController < ApplicationController
         pp params
         card = @user.cards.create(first_name: params[:first_name], last_name: params[:last_name], team: params[:team], condition: params[:condition], year: params[:year], category: params[:category])
         card.card_image.attach(params[:image])
-        card.img_url = polymorphic_url(card.card_image)
+
+        card.img_url = polymorphic_url card.card_image
 
         if card.valid?
             card.save
@@ -62,6 +63,19 @@ class CardsController < ApplicationController
         render json: cards
     end
    
+    def destroy
+        card = Card.find(params[:id])
+        if card.user.id === @user.id 
+            if card.trade
+                card.trade.update(status: "cancelled")
+            end
+            card.destroy
+            render json: {message: "card deleted"}
+        else
+            render json: {message: "not authorized"}, status: :unauthorized
+        end
+
+    end
 
 
     private

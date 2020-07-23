@@ -51,6 +51,12 @@ class TradesController < ApplicationController
         }
     end
 
+    def destroy
+        trade = Trade.find(params[:id])
+        trade.cancel
+        render json: trade
+    end
+
     def update_offer
         trade = Trade.find(params[:id])
 

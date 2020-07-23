@@ -5,6 +5,13 @@ class Trade < ApplicationRecord
     has_many :cards
 
 
+    def cancel 
+        self.update(status: "cancelled")
+        self.cards.each do |card|
+            card.update(trade_id: nil)
+        end
+    end
+
 
     def clear
         if self.status === "accepted"
