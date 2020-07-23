@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :cards, only: [:index, :create, :update, :show]
+  resources :cards, only: [:index, :create, :update, :show, :destroy]
   resources :users, only: [:create, :index]
 
   get 'cards/user/:user_id', to: 'cards#user_cards'
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get '/trades', to: 'trades#index'
   post '/trades', to: 'trades#create'
   get '/trades/:id', to: 'trades#show'
+  delete '/trades/:id', to: 'trades#destroy'
 
   get '/offers', to: 'trades#offers'
   get '/offers/:id', to: 'trades#show'
