@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_07_21_052244) do
   end
 
   create_table "cards", force: :cascade do |t|
+    t.string "title"
     t.string "category"
     t.string "img_url"
     t.string "first_name"
